@@ -1,0 +1,5 @@
+#!/bin/bash
+cat ./vars.js > output.js
+cat ./mousebase.js >> output.js
+cat ./base.js >> output.js
+cat ./main.js >> output.js
