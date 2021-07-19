@@ -9,8 +9,7 @@ window.base={
 		for(let i=0;i<base.cellsList.length;i++){
 			base.cellsList[i]=new Array(vars.sizes.field.y);
 			for(let ii=0;ii<base.cellsList[i].length;ii++){
-				//base.cellsList[i][ii]=new types.cell(new types.vector(i,ii,false),Math.randint(4)==0);//АТТЕНШОН
-				base.cellsList[i][ii]=new types.cell(new types.vector(i,ii,false));//АТТЕНШОН
+				base.cellsList[i][ii]=new types.cell(new types.vector(i,ii,false));
 				base.draw.standFuncs.drawCell(base.cellsList[i][ii]);
 			}
 		}
@@ -48,12 +47,12 @@ window.base={
 		standFuncs:{
 			drawGrid(lineWidth=vars.lineWidth,lineColor='black'){
 				function drawLine(p1,p2,cnv){
-					p1.topx();//мб
-					p2.topx();//аттеншон
+					// p1.topx();//мб
+					// p2.topx();//аттеншон
 					//как показала практика, то, что находится выше, не просто аттеншон, а самое настоящее АТТЕНШОН ТВОЮ МАТЬ, ЭТО САМОЕ КРИВОЖОПОЕ ЧТО БЫЛО В ЭТОМ ПРОЕКТЕ(возможно)
 					cnv.beginPath();
-					cnv.moveTo(p1.x,p1.y);
-					cnv.lineTo(p2.x,p2.y);
+					cnv.moveTo(p1.px.x,p1.px.y);
+					cnv.lineTo(p2.px.x,p2.px.y);
 					cnv.closePath();
 					cnv.stroke();
 				};
@@ -73,35 +72,35 @@ window.base={
 			},
 			drawCell(cell){
 				this.clearCell(cell);//АТТЕНШОН мб
-				cell.pos.topx();
+				// cell.pos.topx();
 				let cnv=base.cnv.ctx,
 					t=new types.vector(vars.sizes.cell.x/4,vars.sizes.cell.y/4);
 				function drawX(){
 					cnv.beginPath();
-					cnv.moveTo(cell.pos.x+t.x  ,cell.pos.y+t.y  );
-					cnv.lineTo(cell.pos.x+t.x*3,cell.pos.y+t.y*3);
-					cnv.moveTo(cell.pos.x+t.x*3,cell.pos.y+t.y  );
-					cnv.lineTo(cell.pos.x+t.x  ,cell.pos.y+t.y*3);
+					cnv.moveTo(cell.pos.px.x+t.x  ,cell.pos.px.y+t.y  );
+					cnv.lineTo(cell.pos.px.x+t.x*3,cell.pos.px.y+t.y*3);
+					cnv.moveTo(cell.pos.px.x+t.x*3,cell.pos.px.y+t.y  );
+					cnv.lineTo(cell.pos.px.x+t.x  ,cell.pos.px.y+t.y*3);
 					cnv.closePath();
 					cnv.stroke();
 				};
 				function drawMine(){
 					drawX(cell,cnv);
 					cnv.beginPath();
-					cnv.moveTo(cell.pos.x+t.x  ,cell.pos.y+t.y*2);
-					cnv.lineTo(cell.pos.x+t.x*3,cell.pos.y+t.y*2);
-					cnv.moveTo(cell.pos.x+t.x*2,cell.pos.y+t.y  );
-					cnv.lineTo(cell.pos.x+t.x*2,cell.pos.y+t.y*3);
+					cnv.moveTo(cell.pos.px.x+t.x  ,cell.pos.px.y+t.y*2);
+					cnv.lineTo(cell.pos.px.x+t.x*3,cell.pos.px.y+t.y*2);
+					cnv.moveTo(cell.pos.px.x+t.x*2,cell.pos.px.y+t.y  );
+					cnv.lineTo(cell.pos.px.x+t.x*2,cell.pos.px.y+t.y*3);
 					cnv.closePath();
 					cnv.stroke();
 				};
 				function drawFlag(){
 					cnv.beginPath();
-					cnv.moveTo(cell.pos.x+t.x*2,cell.pos.y+t.y*3);
-					cnv.lineTo(cell.pos.x+t.x*2,cell.pos.y+t.y  );
-					cnv.lineTo(cell.pos.x+t.x  ,cell.pos.y+t.y  );
-					cnv.lineTo(cell.pos.x+t.x  ,cell.pos.y+t.y*2);
-					cnv.lineTo(cell.pos.x+t.x*2,cell.pos.y+t.y*2);
+					cnv.moveTo(cell.pos.px.x+t.x*2,cell.pos.px.y+t.y*3);
+					cnv.lineTo(cell.pos.px.x+t.x*2,cell.pos.px.y+t.y  );
+					cnv.lineTo(cell.pos.px.x+t.x  ,cell.pos.px.y+t.y  );
+					cnv.lineTo(cell.pos.px.x+t.x  ,cell.pos.px.y+t.y*2);
+					cnv.lineTo(cell.pos.px.x+t.x*2,cell.pos.px.y+t.y*2);
 					cnv.closePath();
 					cnv.stroke();
 				};
@@ -131,13 +130,13 @@ window.base={
 					cnv.strokeStyle=color;
 					cnv.beginPath();
 					let ttt;
-					cell.pos.topx();
+					// cell.pos.topx();
 					for(let i=0;i<ntp[num].length-1;i++){
-						ttt=[points[ntp[num][i  ]],
+						ttt=[points[ntp[num][i]],
 							 points[ntp[num][i+1]]];
 
-						cnv.moveTo(cell.pos.x+ttt[0].x,cell.pos.y+ttt[0].y);
-						cnv.lineTo(cell.pos.x+ttt[1].x,cell.pos.y+ttt[1].y);
+						cnv.moveTo(cell.pos.px.x+ttt[0].x,cell.pos.px.y+ttt[0].y);
+						cnv.lineTo(cell.pos.px.x+ttt[1].x,cell.pos.px.y+ttt[1].y);
 					}
 					cnv.closePath();
 					cnv.stroke();
@@ -146,10 +145,12 @@ window.base={
 					let hlw=vars.lineWidth/2;
 
 					cnv.fillStyle=color;
-					cnv.fillRect(cell.pos.x+hlw,
-								 cell.pos.y+hlw,
-								 vars.sizes.cell.x-hlw,
-								 vars.sizes.cell.y-hlw);
+					cnv.fillRect(
+						cell.pos.px.x+hlw,
+						cell.pos.px.y+hlw,
+						vars.sizes.cell.x-hlw,
+						vars.sizes.cell.y-hlw
+					);
 				};
 
 				if(cell.opened){
@@ -170,11 +171,13 @@ window.base={
 				}
 			},
 			clearCell(cell){
-				cell.pos.topx();
-				base.cnv.ctx.clearRect(cell.pos.x,
-									   cell.pos.y,
-									   vars.sizes.cell.x,
-									   vars.sizes.cell.y);
+				// cell.pos.topx();
+				base.cnv.ctx.clearRect(
+					cell.pos.px.x,
+					cell.pos.px.y,
+					vars.sizes.cell.x,
+					vars.sizes.cell.y
+				);
 			}
 		}
 	},
@@ -200,17 +203,17 @@ window.base={
 				return 1;
 		}
 		function distance(a,b){
-			a.pos.topt();
-			b.pos.topt();
-			return Math.sqrt((b.pos.x-a.pos.x)**2+(b.pos.y-a.pos.y)**2);
+			// a.pos.topt();
+			// b.pos.topt();
+			return Math.sqrt((b.pos.pt.x-a.pos.pt.x)**2+(b.pos.pt.y-a.pos.pt.y)**2);
 		}
 
 		ccell=ccell||base.cell(10,10);
 		let distFactor;
 		for(let i of base.cellsList){
 			for(let ii of i){
-				ii.pos.topt();
-				ccell.pos.topt();
+				// ii.pos.topt();
+				// ccell.pos.topt();
 				distFactor=f(distance(ccell,ii),startRange,startRangeEnd);
 				ii.mine=Math.random()<=prob*distFactor;
 			}
@@ -218,7 +221,7 @@ window.base={
 	},
 
 	gameover(result){
-		console.log('gameover by ',result.pos);
+		console.log('gameover by ',result.pos.pt);
 		base.openAll();
 	},
 	openAll(){

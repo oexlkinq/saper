@@ -4,7 +4,7 @@ window.main={
 		base.init();
 
 		function click(){
-			let tcp=mousebase.mo.pos.pt();
+			let tcp=mousebase.mo.pos.pt;
 			let tc=base.cell(tcp.x,tcp.y);
 			if(firstClick){
 				firstClick=false;
@@ -24,7 +24,7 @@ window.main={
 		//mousebase.addListener('move',click);
 
 		mousebase.addListener('rclick',function(){
-			let tcp=mousebase.mo.pos.pt();
+			let tcp=mousebase.mo.pos.pt;
 			let tc=base.cell(tcp.x,tcp.y);
 
 			if(tc)

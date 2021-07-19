@@ -31,11 +31,11 @@ window.onmousemove=function(event){
 
 	mousebase.mo.lapos.cf(mousebase.mo.pos);
 
-	mousebase.mo.pos.x=event.clientX-shift.x;
-	mousebase.mo.pos.y=event.clientY-shift.y;
+	mousebase.mo.pos.px.x=event.clientX-shift.px.x;
+	mousebase.mo.pos.px.y=event.clientY-shift.px.y;
 
-	mousebase.mo.vel.x=mousebase.mo.pos.x-mousebase.mo.lapos.x;
-	mousebase.mo.vel.y=mousebase.mo.pos.y-mousebase.mo.lapos.y;
+	mousebase.mo.vel.px.x=mousebase.mo.pos.px.x-mousebase.mo.lapos.px.x;
+	mousebase.mo.vel.px.y=mousebase.mo.pos.px.y-mousebase.mo.lapos.px.y;
 
 	for(let i of mousebase.runlists.move)
 		i();

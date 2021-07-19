@@ -4,38 +4,36 @@ window.types={
 		this.y=y;
 	},
 	vector:function(x=0,y=0,ispx=true){
+		let self=this;
+		if(!ispx){
+			x=x*vars.sizes.cell.x;
+			y=y*vars.sizes.cell.y;
+		}
 		this.x=x;
 		this.y=y;
-		this.ispx=ispx;
+
+		this.px={
+			get x(){return self.x;},
+			set x(value){self.x=value;self.pt.updateX();},
+			get y(){return self.y;},
+			set y(value){self.y=value;self.pt.updateY();},
+		};
+		this.pt={
+			_x:0,_y:0,
+			get x(){return _x;},
+			set x(value){self.x=value*vars.sizes.cell.x;this._x=value;},
+			get y(){return _y;},
+			set y(value){self.y=value*vars.sizes.cell.y;this._y=value;},
+			updateX(){this._x=self.x*vars.sizes.cell.x;},
+			updateY(){this._y=self.y*vars.sizes.cell.y;},
+			update(){updateX();updateY();},
+		};
 		this.cf=function(value){
 			this.x=value.x;
 			this.y=value.y;
-			this.ispx=value.ispx;};
+			this.pt.update();
+		};
 		this.eq=function(value){return this.x==value.x&&this.y==value.y;};
-		this.px=function(){
-			if(this.ispx)
-				return this;
-			return new types.vector(this.x*vars.sizes.cell.x,
-									this.y*vars.sizes.cell.y);
-		};
-		this.pt=function(){
-			if(this.ispx)
-				return new types.vector(Math.floor(this.x/vars.sizes.cell.x),
-										Math.floor(this.y/vars.sizes.cell.y),false);
-			return this;
-		};
-		this.topx=function(){
-			this.cf(this.px());
-			this.ispx=true;
-
-			return this;
-		};
-		this.topt=function(){
-			this.cf(this.pt());
-			this.ispx=false;
-
-			return this;
-		};
 	},
 	cell:function(pos,mine=false,opened=false,flag=false){
 		this.pos=pos||new types.vector();
@@ -64,8 +62,8 @@ window.types={
 							for(let i=-1;i<=1;i++){
 								for(let ii=-1;ii<=1;ii++){
 									if(i||ii){
-										toscan[n].pos.topt();
-										cell=base.cell(toscan[n].pos.x+i,toscan[n].pos.y+ii);
+										// toscan[n].pos.topt();
+										cell=base.cell(toscan[n].pos.pt.x+i,toscan[n].pos.pt.y+ii);
 										if(cell&&!cell.opened){
 											cell.qOpen();
 											if(cell.getMinesNum()===0)
@@ -99,11 +97,11 @@ window.types={
 		this.getMinesNum=function(){
 			let minesNum=0,cell;
 
-			this.pos.topt();
+			// this.pos.topt();
 			for(let i=-1;i<=1;i++){
 				for(let ii=-1;ii<=1;ii++){
 					if(i||ii){
-						cell=base.cell(this.pos.x+i,this.pos.y+ii);
+						cell=base.cell(this.pos.pt.x+i,this.pos.pt.y+ii);
 						if(cell&&cell.mine)
 							minesNum++;
 					}
@@ -115,11 +113,11 @@ window.types={
 		this.getFlagsNum=function(){
 			let flagsNum=0,cell;
 
-			this.pos.topt();
+			// this.pos.topt();
 			for(let i=-1;i<=1;i++){
 				for(let ii=-1;ii<=1;ii++){
 					if(i||ii){
-						cell=base.cell(this.pos.x+i,this.pos.y+ii);
+						cell=base.cell(this.pos.pt.x+i,this.pos.pt.y+ii);
 						if(cell&&cell.flag)
 							flagsNum++;
 					}
@@ -130,10 +128,10 @@ window.types={
 		};
 		this.openWithNear=function(){
 			let cell;
-			this.pos.topt();
+			// this.pos.topt();
 			for(let i=-1;i<=1;i++){
 				for(let ii=-1;ii<=1;ii++){
-					cell=base.cell(this.pos.x+i,this.pos.y+ii);
+					cell=base.cell(this.pos.pt.x+i,this.pos.pt.y+ii);
 					if(cell)
 						cell.open();
 				}
