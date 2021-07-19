@@ -20,13 +20,13 @@ window.types={
 		};
 		this.pt={
 			_x:0,_y:0,
-			get x(){return _x;},
-			set x(value){self.x=value*vars.sizes.cell.x;this._x=value;},
-			get y(){return _y;},
-			set y(value){self.y=value*vars.sizes.cell.y;this._y=value;},
-			updateX(){this._x=self.x*vars.sizes.cell.x;},
-			updateY(){this._y=self.y*vars.sizes.cell.y;},
-			update(){updateX();updateY();},
+			get x(){return this._x;},
+			set x(value){self.x=value/vars.sizes.cell.x;this._x=value;},
+			get y(){return this._y;},
+			set y(value){self.y=value/vars.sizes.cell.y;this._y=value;},
+			updateX(){this._x=self.x/vars.sizes.cell.x;},
+			updateY(){this._y=self.y/vars.sizes.cell.y;},
+			update(){this.updateX();this.updateY();},
 		};
 		this.cf=function(value){
 			this.x=value.x;
@@ -40,7 +40,6 @@ window.types={
 		this.mine=mine;
 		this.opened=opened;
 		this.flag=flag;
-		//this.scanned=undefined;
 		this.nearMinesCount=undefined;
 		this.qOpen=function(){
 			this.opened=true;

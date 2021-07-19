@@ -5,6 +5,8 @@ window.main={
 
 		function click(){
 			let tcp=mousebase.mo.pos.pt;
+			tcp.x=Math.round(tcp.x);
+			tcp.y=Math.round(tcp.y);
 			let tc=base.cell(tcp.x,tcp.y);
 			if(firstClick){
 				firstClick=false;
