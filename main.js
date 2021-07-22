@@ -10,7 +10,8 @@ window.main={
 			let tc=base.cell(tcp.x,tcp.y);
 			if(firstClick){
 				firstClick=false;
-				base.randomizeMines(tc,0.2,3,5);
+				base.randomizeMines(tc,0.2,2,4);
+				base.updateMenu();
 			}
 
 			if(tc){

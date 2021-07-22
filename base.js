@@ -161,7 +161,10 @@ window.base={
 							drawBox("#FF0000");
 						drawMine();
 					}else{
-						drawBox('#FFFFFF');
+						if(cell.flag)
+							drawBox('#FFFF00');
+						else
+							drawBox('#FFFFFF');
 						drawNum(cell.nearMinesCount||cell.getMinesNum());
 					}
 				}else{
@@ -208,6 +211,9 @@ window.base={
 			return Math.sqrt((b.pos.pt.x-a.pos.pt.x)**2+(b.pos.pt.y-a.pos.pt.y)**2);
 		}
 
+		base.minesCount=0;
+		base.flagsCount=0;
+
 		ccell=ccell||base.cell(10,10);
 		let distFactor;
 		for(let i of base.cellsList){
@@ -216,13 +222,18 @@ window.base={
 				// ccell.pos.topt();
 				distFactor=f(distance(ccell,ii),startRange,startRangeEnd);
 				ii.mine=Math.random()<=prob*distFactor;
+				base.minesCount+=ii.mine;
 			}
 		}
 	},
 
 	gameover(result){
-		console.log('gameover by ',result.pos.pt);
+		if(result)
+			console.log('gameover by ',result.pos.pt);
 		base.openAll();
+	},
+	win(){
+		base.gameover();
 	},
 	openAll(){
 		for(let i of base.cellsList){
@@ -231,7 +242,13 @@ window.base={
 			}
 		}
 	},
-	updateMenu(mines,flags){
-		base.menu.text=`*: ${mines} | F: ${flags}`;
+	updateMenu(mines=base.minesCount,flags=base.flagsCount,additionText=''){
+		//base.menu.text=`*: ${mines} | F: ${flags} | *-F: ${mines-flags}`;
+		if(mines-flags==0){
+			if(!additionText)
+				additionText=' | \\0/';
+			base.win();
+		}
+		base.menu.text=`*: ${mines-flags}${additionText}`;
 	},
 };

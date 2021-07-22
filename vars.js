@@ -91,6 +91,7 @@ window.types={
 				else
 					base.flagsCount--;
 				base.draw.standFuncs.drawCell(this);
+				base.updateMenu();
 
 				return true;
 			}
@@ -143,8 +144,8 @@ window.types={
 
 window.vars={
 	sizes:{
-		cell:new types.vector(25,25),
-		field:new types.vector(60,30),
+		cell:new types.point(25,25),
+		field:new types.point(10,10),
 		get canvas(){return new types.vector(this.field.x*this.cell.x,
 											 this.field.y*this.cell.y);},
 	},
