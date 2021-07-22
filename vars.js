@@ -5,6 +5,7 @@ window.types={
 	},
 	vector:function(x=0,y=0,ispx=true){
 		let self=this;
+
 		if(!ispx){
 			x=x*vars.sizes.cell.x;
 			y=y*vars.sizes.cell.y;
@@ -19,11 +20,12 @@ window.types={
 			set y(value){self.y=value;self.pt.updateY();},
 		};
 		this.pt={
-			_x:0,_y:0,
-			get x(){return this._x;},
-			set x(value){self.x=value/vars.sizes.cell.x;this._x=value;},
-			get y(){return this._y;},
-			set y(value){self.y=value/vars.sizes.cell.y;this._y=value;},
+			_x:undefined,
+			_y:undefined,
+			get x(){if(!this._x)this._x=x/vars.sizes.cell.x;return this._x;},
+			set x(value){self.x=value*vars.sizes.cell.x;this._x=value;},
+			get y(){if(!this._y)this._y=y/vars.sizes.cell.y;return this._y;},
+			set y(value){self.y=value*vars.sizes.cell.y;this._y=value;},
 			updateX(){this._x=self.x/vars.sizes.cell.x;},
 			updateY(){this._y=self.y/vars.sizes.cell.y;},
 			update(){this.updateX();this.updateY();},

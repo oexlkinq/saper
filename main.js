@@ -5,8 +5,8 @@ window.main={
 
 		function click(){
 			let tcp=mousebase.mo.pos.pt;
-			tcp.x=Math.round(tcp.x);
-			tcp.y=Math.round(tcp.y);
+			tcp.x=Math.floor(tcp.x);
+			tcp.y=Math.floor(tcp.y);
 			let tc=base.cell(tcp.x,tcp.y);
 			if(firstClick){
 				firstClick=false;
@@ -27,6 +27,8 @@ window.main={
 
 		mousebase.addListener('rclick',function(){
 			let tcp=mousebase.mo.pos.pt;
+			tcp.x=Math.floor(tcp.x);
+			tcp.y=Math.floor(tcp.y);
 			let tc=base.cell(tcp.x,tcp.y);
 
 			if(tc)
