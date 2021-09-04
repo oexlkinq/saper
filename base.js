@@ -1,6 +1,10 @@
 window.base={
-	init(){
-		mousebase.shiftobj=base.cnv.el;
+	init(fullf=true){
+		mousebase.init(base.cnv.el);
+		if(fullf){
+			vars.sizes.field.x=Math.floor(document.documentElement.clientWidth/vars.sizes.cell.x);
+			vars.sizes.field.y=Math.floor(document.documentElement.clientHeight/vars.sizes.cell.y)-1;
+		}
 
 		base.cnv.el.setAttribute('width',vars.sizes.canvas.x);
 		base.cnv.el.setAttribute('height',vars.sizes.canvas.y);

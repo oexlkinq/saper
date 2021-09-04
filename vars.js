@@ -145,7 +145,7 @@ window.types={
 window.vars={
 	sizes:{
 		cell:new types.point(25,25),
-		field:new types.point(10,10),
+		field:new types.point(50,20),
 		get canvas(){return new types.vector(this.field.x*this.cell.x,
 											 this.field.y*this.cell.y);},
 	},
